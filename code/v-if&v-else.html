@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Hello, Vue.js!</h1>
+        <h1 v-if="yes">Yes!</h1>
+        <h1 v-else>No!</h1>
+        <h1 v-if="age >= 21">Age: {{ age }}</h1>
+        <h1 v-else>Name: {{ name }}</h1>
+    </div>
+</body>
+<script src="http://static.runoob.com/assets/vue/1.0.11/vue.min.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            yes: true,
+            age: 25,
+            name: 'keepfool'
+        }
+    })
+</script>
+
+</html>

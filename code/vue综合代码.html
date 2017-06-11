@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="styles/demo.css" />
+</head>
+
+<body>
+    <div id="app">
+
+        <fieldset>
+            <legend>
+                水果管理系统
+            </legend>
+            <div class="form-group">
+                <label>水果名:</label>
+                <input type="text" v-model="newPerson.name" />
+            </div>
+            <div class="form-group">
+                <label>保质期:</label>
+                <input type="text" v-model="newPerson.age" />
+            </div>
+
+            <div class="form-group">
+                <label>颜色:</label>
+                <select v-model="newPerson.sex">
+                    <option value="深色">深色</option>
+                    <option value="浅色">浅色</option>
+                </select>
+                <label>是否过期:</label>
+                <select v-model="newPerson.lx1">
+                    <option value="过期">过期</option>
+                    <option value="未过期">未过期</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label></label>
+                <button @click="createPerson">Create</button>
+            </div>
+        </fieldset>
+        <table>
+            <thead>
+                <tr>
+                    <th>水果名</th>
+                    <th>保质期</th>
+                    <th>颜色</th>
+                    <th>是否过期</th>
+                    <th>删除</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="person in people">
+                    <td>{{ person.name }}</td>
+                    <td>{{ person.age }}</td>
+                    <td>{{ person.sex }}</td>
+                    <td v-if="person.age >= 30">{{person.lx1}}</td>
+                    <td v-else>{{person.lx2}}</td>
+                    <td :class="'text-center'">
+                        <button @click="deletePerson($index)">删除</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script src="js/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            newPerson: {
+                name: '',
+                age: '',
+                sex: 'Male',
+                lx1: '过期',
+                lx2: '未过期'
+
+
+            },
+            people: [{
+                name: '苹果',
+                age: 30,
+                sex: '浅色',
+                lx1: '过期',
+                lx2: '未过期'
+            }, {
+                name: '梨子',
+                age: 26,
+                sex: '浅色',
+                lx1: '过期',
+                lx2: '未过期'
+
+            }, {
+                name: '香蕉',
+                age: 22,
+                sex: '浅色',
+                lx1: '过期',
+                lx2: '未过期'
+            }, {
+                name: '樱桃',
+                age: 36,
+                sex: '深色',
+                lx1: '过期',
+                lx2: '未过期'
+
+            }]
+        },
+        methods: {
+            createPerson: function() {
+                this.people.push(this.newPerson);
+                this.newPerson = {
+                    name: '',
+                    age: '',
+                    sex: '深色',
+                    lx2: '过期'
+                }
+            },
+            deletePerson: function(index) {
+                this.people.splice(index, 1);
+            }
+        }
+    })
+</script>
+
+</html>

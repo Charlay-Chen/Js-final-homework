@@ -24,12 +24,13 @@ ViewModel中的DOM Listeners工具会检测页面上DOM元素的变化，进而�
         <div id="app">
             {{ message }}
         </div>
+        <!--//view-->
     </body>
     <script src="http://static.runoob.com/assets/vue/1.0.11/vue.min.js"></script>
     <script>
         var exampleData = {
             message: 'Hello World!'
-        }
+        }//model
 
         new Vue({
             el: '#app',
@@ -61,7 +62,7 @@ ViewModel中的DOM Listeners工具会检测页面上DOM元素的变化，进而�
 ### v-if & v-else
 v-if后面直接跟表达式，通过判断表达式的真伪来删除和插入元素，基本语法：v-if="expression"
 expression返回值是一个bool值。
-v-else指令问哦v-if添加一个else块，要跟再v-if后面才能够被识别
+v-else指令是在v-if后添加一个else块，要跟再v-if后面才能够被识别
 ```html
 <!DOCTYPE html>
 <html>
@@ -267,43 +268,46 @@ v-on指令用于给监听DOM事件，后面也是用冒号隔开然后再跟上�
     <meta charset="UTF-8">
     <title></title>
     <link rel="stylesheet" href="styles/demo.css" />
+    <style type="text/CSS">
+        body{margin: 0;padding: 0;} #fieldest{width: 260px;height: 400px;float: left;} #table{width: 350px;height: 400px;}
+    </style>
 </head>
 
 <body>
     <div id="app">
 
-        <fieldset>
+        <fieldset id="fieldest">
             <legend>
                 水果管理系统
             </legend>
             <div class="form-group">
                 <label>水果名:</label>
-                <input type="text" v-model="newPerson.name" />
+                <input type="text" v-model="newFruit.name" />
             </div>
             <div class="form-group">
                 <label>保质期:</label>
-                <input type="text" v-model="newPerson.age" />
+                <input type="text" v-model="newFruit.age" />
             </div>
 
             <div class="form-group">
                 <label>颜色:</label>
-                <select v-model="newPerson.sex">
+                <select v-model="newFruit.sex">
                     <option value="深色">深色</option>
                     <option value="浅色">浅色</option>
                 </select>
-                <label>是否过期:</label>
-                <select v-model="newPerson.lx1">
+                <!--<label>是否过期:</label>
+                <select v-model="newFruit.lx1">
                     <option value="过期">过期</option>
                     <option value="未过期">未过期</option>
-                </select>
+                </select>-->
             </div>
 
             <div class="form-group">
                 <label></label>
-                <button @click="createPerson">Create</button>
+                <button @click="createFruit">Create</button>
             </div>
         </fieldset>
-        <table>
+        <table id="table">
             <thead>
                 <tr>
                     <th>水果名</th>
@@ -315,14 +319,14 @@ v-on指令用于给监听DOM事件，后面也是用冒号隔开然后再跟上�
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="person in people">
-                    <td>{{ person.name }}</td>
-                    <td>{{ person.age }}</td>
-                    <td>{{ person.sex }}</td>
-                    <td v-if="person.age >= 30">{{person.lx1}}</td>
-                    <td v-else>{{person.lx2}}</td>
+                <tr v-for="fruit in fruits">
+                    <td>{{ fruit.name }}</td>
+                    <td>{{ fruit.age }}</td>
+                    <td>{{ fruit.sex }}</td>
+                    <td v-if="fruit.age >= 30">{{fruit.lx1}}</td>
+                    <td v-else>{{fruit.lx2}}</td>
                     <td :class="'text-center'">
-                        <button @click="deletePerson($index)">删除</button></td>
+                        <button @click="deleteFruit($index)">删除</button></td>
                 </tr>
             </tbody>
         </table>
@@ -333,7 +337,7 @@ v-on指令用于给监听DOM事件，后面也是用冒号隔开然后再跟上�
     var vm = new Vue({
         el: '#app',
         data: {
-            newPerson: {
+            newFruit: {
                 name: '',
                 age: '',
                 sex: 'Male',
@@ -342,7 +346,7 @@ v-on指令用于给监听DOM事件，后面也是用冒号隔开然后再跟上�
 
 
             },
-            people: [{
+            fruits: [{
                 name: '苹果',
                 age: 30,
                 sex: '浅色',
@@ -371,17 +375,18 @@ v-on指令用于给监听DOM事件，后面也是用冒号隔开然后再跟上�
             }]
         },
         methods: {
-            createPerson: function() {
-                this.people.push(this.newPerson);
-                this.newPerson = {
+            createFruit: function() {
+                this.fruits.push(this.newFruit);
+                this.newFruit = {
                     name: '',
                     age: '',
                     sex: '深色',
-                    lx2: '过期'
+                    lx1: '过期',
+                    lx2: '未过期'
                 }
             },
-            deletePerson: function(index) {
-                this.people.splice(index, 1);
+            deleteFruit: function(index) {
+                this.fruits.splice(index, 1);
             }
         }
     })

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="styles/demo.css" />
+</head>
+
+<body>
+    <div id="fruit">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Fruit</th>
+                    <th>Color</th>
+                    <th>Sweet or not Sweet</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="fruit in fruits">
+                    <td>{{ fruit.name }}</td>
+                    <td>{{ fruit.age }}</td>
+                    <td>{{ fruit.sex }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script src="http://static.runoob.com/assets/vue/1.0.11/vue.min.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#fruit',
+        data: {
+            fruits: [{
+                name: 'Apple',
+                age: 1,
+                sex: 'sweet'
+            }, {
+                name: 'Banana',
+                age: 2,
+                sex: 'sweet'
+            }, {
+                name: 'Orange',
+                age: 3,
+                sex: 'not sweet'
+            }, {
+                name: 'Pear',
+                age: 2,
+                sex: 'sweet'
+            }]
+        }
+    })
+</script>
+
+</html>
