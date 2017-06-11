@@ -12,7 +12,7 @@ ViewModel中的DOM Listeners工具会检测页面上DOM元素的变化，进而�
 * 创建Vue实例将View和Model连接起来。
 
 ## 例子
-```javascript
+```html
 <!DOCTYPE html>
 <html>
     <head>
@@ -62,7 +62,7 @@ ViewModel中的DOM Listeners工具会检测页面上DOM元素的变化，进而�
 v-if后面直接跟表达式，通过判断表达式的真伪来删除和插入元素，基本语法：v-if="expression"
 expression返回值是一个bool值。
 v-else指令问哦v-if添加一个else块，要跟再v-if后面才能够被识别
-```javascript
+```html
 <!DOCTYPE html>
 <html>
     <head>
@@ -103,7 +103,7 @@ v-for的作用就是根据一组数据的选项列表进行渲染，它的语法
 items是一个数组，item是数组元素。
 #### 示例
 
-```javascript
+```html
 <!DOCTYPE html>
 <html>
 
@@ -165,3 +165,229 @@ items是一个数组，item是数组元素。
 这段代码中，在选项对象的data属性中定义了一个fruits数组，然后
 用v-for便利fruit对象的名字、年份和甜度。
 因为v-if将数组中的数据遍历了一边，所以表格就会有四行。
+
+
+### v-bind
+v-bind 指令用于响应地更新 HTML 特性
+v-bind指令可以在其名称后带一个参数，用冒号隔开。
+
+#### 示例
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="styles/demo.css" />
+    
+</head>
+
+<body>
+    <div id="app">
+
+        <ul class="pagination">
+            <li v-for="n in pageCount" >
+                <a v-bind:class="activeNumber === n + 1 ? 'active' : ''">{{ n + 1 }}></a>
+            </li>
+        </ul>
+    </div>
+</body>
+<script src="js/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            activeNumber: 10,
+            pageCount: 20
+
+        }
+    })
+</script>
+
+</html>
+```
+这段代码的效果就是输出一行数据，然后将一个数字的框进行高亮标记。
+输出一串数字还是通过v-for对pageCount从0开遍历。而当前的高亮的数字则通过
+
+    v-bind:class="activeNumber === n + 1 ? 'active' : ''"
+
+这段代码实现，activeNumber在data中已经有一个值，然后当v-for遍历到判断语句成立的时候，就会高亮。
+
+### v-on
+v-on指令用于给监听DOM事件，后面也是用冒号隔开然后再跟上方法。
+有两种形式调用方法：绑定一个方法（让事件指向方法的引用），或者使用内联语句。
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <div id="app">
+        <p><input type="text" v-model="message"></p>
+        <p>
+            <button v-on:click="greet">Greet</button>
+            <button v-on:click="say('Hi')">Hi</button>
+        </p>
+    </div>
+
+</body>
+<script src="js/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello, Vue.js!'
+        },
+        methods: {
+            greet: function() {
+                alert(this.message)
+            },
+            say: function(msg) {
+                prompt("hello", "陈尔磊")
+            }
+        }
+    })
+</script>
+</html>
+```
+### 综合代码
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="styles/demo.css" />
+</head>
+
+<body>
+    <div id="app">
+
+        <fieldset>
+            <legend>
+                水果管理系统
+            </legend>
+            <div class="form-group">
+                <label>水果名:</label>
+                <input type="text" v-model="newPerson.name" />
+            </div>
+            <div class="form-group">
+                <label>保质期:</label>
+                <input type="text" v-model="newPerson.age" />
+            </div>
+
+            <div class="form-group">
+                <label>颜色:</label>
+                <select v-model="newPerson.sex">
+                    <option value="深色">深色</option>
+                    <option value="浅色">浅色</option>
+                </select>
+                <label>是否过期:</label>
+                <select v-model="newPerson.lx1">
+                    <option value="过期">过期</option>
+                    <option value="未过期">未过期</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label></label>
+                <button @click="createPerson">Create</button>
+            </div>
+        </fieldset>
+        <table>
+            <thead>
+                <tr>
+                    <th>水果名</th>
+                    <th>保质期</th>
+                    <th>颜色</th>
+                    <th>是否过期</th>
+                    <th>删除</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="person in people">
+                    <td>{{ person.name }}</td>
+                    <td>{{ person.age }}</td>
+                    <td>{{ person.sex }}</td>
+                    <td v-if="person.age >= 30">{{person.lx1}}</td>
+                    <td v-else>{{person.lx2}}</td>
+                    <td :class="'text-center'">
+                        <button @click="deletePerson($index)">删除</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script src="js/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            newPerson: {
+                name: '',
+                age: '',
+                sex: 'Male',
+                lx1: '过期',
+                lx2: '未过期'
+
+
+            },
+            people: [{
+                name: '苹果',
+                age: 30,
+                sex: '浅色',
+                lx1: '过期',
+                lx2: '未过期'
+            }, {
+                name: '梨子',
+                age: 26,
+                sex: '浅色',
+                lx1: '过期',
+                lx2: '未过期'
+
+            }, {
+                name: '香蕉',
+                age: 22,
+                sex: '浅色',
+                lx1: '过期',
+                lx2: '未过期'
+            }, {
+                name: '樱桃',
+                age: 36,
+                sex: '深色',
+                lx1: '过期',
+                lx2: '未过期'
+
+            }]
+        },
+        methods: {
+            createPerson: function() {
+                this.people.push(this.newPerson);
+                this.newPerson = {
+                    name: '',
+                    age: '',
+                    sex: '深色',
+                    lx2: '过期'
+                }
+            },
+            deletePerson: function(index) {
+                this.people.splice(index, 1);
+            }
+        }
+    })
+</script>
+
+</html>
+```
+
+
